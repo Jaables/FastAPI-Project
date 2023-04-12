@@ -1,6 +1,6 @@
 from typing import Optional
 
-from fastapi import FastAPI, Path, Query
+from fastapi import FastAPI, Path, Query, HTTPException
 from pydantic import BaseModel, Field
 
 app = FastAPI()
@@ -58,6 +58,8 @@ async def read_book(book_id: int = Path(gt=0)):
         if book.id == book_id:
             return book
 
+    raise HTTPException(status_code=404, detail='Item not found')
+
 @app.get("/books/")
 async def read_book_by_rating(book_rating: int = Query(gt=0, lt=6)):
     books_to_return = []
@@ -80,13 +82,25 @@ def find_book_id(book: Book):
 
 @app.put("/books/update_book")
 async def update_book(book: BookRequest):
+
+    book_changed = False
+
     for i in range(len(BOOKS)):
         if BOOKS[i].id == book.id:
             BOOKS[i] = book
+            book_changed = True
+
+    if not book_changed:
+        raise HTTPException(status_code=404, detail='Item not found')
 
 @app.delete('/books/{book_id}')
 async def delete_book(book_id: int = Path(gt=0)):
+    book_changed = False
     for i in range(len(BOOKS)):
         if BOOKS[i].id == book_id:
             BOOKS.pop(i)
+            book_changed = True
             break
+
+    if not book_changed:
+        raise HTTPException(status_code=404, detail='Item not found')
