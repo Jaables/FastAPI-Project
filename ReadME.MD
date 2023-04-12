@@ -1,1 +1,1 @@
-This projectw as set up to help me learn FastAPI. This doc will be updated in due course
+This is a simple project set up to practice creating and using FastAPI
