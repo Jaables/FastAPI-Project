@@ -1,0 +1,1 @@
+This projectw as set up to help me learn FastAPI. This doc will be updated in due course
