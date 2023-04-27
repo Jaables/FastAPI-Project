@@ -1,1 +1,1 @@
-This is a simple project set up to practice creating and using FastAPI
+This is a simple project set up to practice and using FastAPI. FastAPI was used here as an interface between the user and a database, the user can log in and manage their to do list. They can create, update, view and delete all of their entries in the database.
